@@ -1,11 +1,55 @@
 
-[v0.39.3](https://github.com/nextcloud/nextcloudpi/commit/601f935) (2017-11-29) nc-export: silent cd
+[v0.44.1](https://github.com/nextcloud/nextcloudpi/commit/72699f5) (2017-12-28) nc-snapshot: use btrfs-snp
 
-[v0.39.2](https://github.com/nextcloud/nextcloudpi/commit/76d45cf) (2017-11-29) nc-import: fix ncp-web appearing to fail when activating options that restart httpd
+[v0.44.0](https://github.com/nextcloud/nextcloudpi/commit/15587e8) (2017-12-28) added nc-snapshot-auto
+
+[v0.43.3 ](https://github.com/nextcloud/nextcloudpi/commit/f6ab161) (2017-12-26) nc-datadir: use clone on btrfs systems
+
+[v0.43.2 ](https://github.com/nextcloud/nextcloudpi/commit/ae8d30b) (2017-12-19) UFW: prettier output
+
+[v0.43.1 ](https://github.com/nextcloud/nextcloudpi/commit/114ea18) (2017-12-19) ncp-config: validate input
+
+[v0.43.0 ](https://github.com/nextcloud/nextcloudpi/commit/9eeb221) (2017-12-18) added nc-audit
+
+[v0.42.0 ](https://github.com/nextcloud/nextcloudpi/commit/aaac71f) (2017-12-18) added UFW
+
+[v0.41.13](https://github.com/nextcloud/nextcloudpi/commit/d5e90a6) (2017-12-17) security hardening part 3
+
+[v0.41.12](https://github.com/nextcloud/nextcloudpi/commit/672d233) (2017-12-17) security hardening part 2
+
+[v0.41.11](https://github.com/nextcloud/nextcloudpi/commit/b817b90) (2017-12-16) security hardening
+
+[v0.41.10](https://github.com/nextcloud/nextcloudpi/commit/330df57) (2017-12-16) dnsmasq: added interface
+
+[v0.41.9 ](https://github.com/nextcloud/nextcloudpi/commit/e4e205f) (2017-12-14) fix occ command without execute permissions
+
+[v0.41.8 ](https://github.com/nextcloud/nextcloudpi/commit/26d6f66) (2017-12-13) Fixed configuration interoperability between nc-datadit and fail2ban. (#323)
+
+[v0.41.7 ](https://github.com/nextcloud/nextcloudpi/commit/ce92a4f) (2017-12-12) replace ping to github.com to google.com
+
+[v0.41.6 ](https://github.com/nextcloud/nextcloudpi/commit/4f63c34) (2017-12-05) ncp-config: show changelog on updates
+
+[v0.41.5 ](https://github.com/nextcloud/nextcloudpi/commit/0fe56d8) (2017-12-05) nc-database: accept BTRFS filesystems
+
+[v0.41.4 ](https://github.com/nextcloud/nextcloudpi/commit/231ede0) (2017-11-29) nc-limits: added PHP threads and Redis mem limits
+
+[v0.41.3 ](https://github.com/nextcloud/nextcloudpi/commit/1014845) (2017-12-05) SSH: enhance security
+
+[v0.41.2 ](https://github.com/nextcloud/nextcloudpi/commit/a2c5de7) (2017-12-04) nc-automount: check for USBdrive labeled drive case
+
+[v0.41.1 ](https://github.com/nextcloud/nextcloudpi/commit/9ef8bc1) (2017-12-04) nc-info: warn of long operation
+
+[v0.41.0 ](https://github.com/nextcloud/nextcloudpi/commit/d191176) (2017-12-04) updated to NC12.0.4
+
+[v0.40.0 ](https://github.com/nextcloud/nextcloudpi/commit/3b799fa) (2017-12-03) added btrfs snapshots
+
+[v0.39.3 ](https://github.com/nextcloud/nextcloudpi/commit/fbf2079) (2017-11-29) nc-export: silent cd
+
+[v0.39.2 ](https://github.com/nextcloud/nextcloudpi/commit/76d45cf) (2017-11-29) nc-import: fix ncp-web appearing to fail when activating options that restart httpd
 
 [v0.39.1 ](https://github.com/nextcloud/nextcloudpi/commit/6af40a9) (2017-11-28) motd: update logo
 
-[v0.39.0](https://github.com/nextcloud/nextcloudpi/commit/a3afa14) (2017-11-27) added nc-export-ncp and nc-import-ncp
+[v0.39.0 ](https://github.com/nextcloud/nextcloudpi/commit/a3afa14) (2017-11-27) added nc-export-ncp and nc-import-ncp
 
 [v0.38.1 ](https://github.com/nextcloud/nextcloudpi/commit/0943d83) (2017-11-27) nc-info: warn distro
 

@@ -57,7 +57,7 @@ EOF
 # tested with git version v0.11.0-71-g018a304
 configure() 
 {
-  ping  -W 2 -w 1 -q github.com &>/dev/null || { echo "No internet connectivity"; return 1; }
+  ping  -W 2 -w 1 -q google.com &>/dev/null || { echo "No internet connectivity"; return 1; }
 
   local DOMAIN_LOWERCASE="${DOMAIN_,,}"
 
@@ -84,6 +84,43 @@ configure()
   }
   rm -rf $NCDIR/.well-known
   return 1
+}
+
+cleanup()
+{
+  apt-get purge -y \
+    make \
+    git \
+    augeas-lenses \
+    binutils \
+    cpp \
+    cpp-6 \
+    gcc \
+    gcc-6 \
+    libasan3 \
+    libaugeas0 \
+    libc-dev-bin \
+    libc6-dev \
+    libcc1-0 \
+    libexpat1-dev \
+    libffi-dev \
+    libgcc-6-dev \
+    libgomp1 \
+    libisl15 \
+    libmpc3 \
+    libpython-dev \
+    libpython2.7-dev \
+    libssl-dev \
+    libubsan0 \
+    linux-libc-dev \
+    python-dev \
+    python-virtualenv \
+    python2.7-dev \
+    python-pkg-resources \
+    python3-pkg-resources \
+    python3-virtualenv \
+    virtualenv \
+    python-pip-whl
 }
 
 # License

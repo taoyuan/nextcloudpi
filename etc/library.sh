@@ -49,8 +49,9 @@ function config()
       $DIALOG_OK)
         local RET=( $value )
         for i in $( seq 0 1 $(( ${#RET[@]} - 1 )) ); do
+          # check for invalid characters
+          grep -q "[&]" <<< "${RET[$i]}" && { echo "Invalid characters in field ${VARS[$i]}"; return 1; }
           local SEDRULE+="s|^${VARS[$i]}_=.*|${VARS[$i]}_=${RET[$i]}|;"
-          local CONFIG+="${VARS[$i]}=${RET[$i]}\n"
         done
         break
         ;;
@@ -140,6 +141,21 @@ function configure_script()
     echo -e "Launching $( basename "$SCRIPT" .sh )"
     set +x
     configure
+    return 0
+  )
+}
+
+function cleanup_script()
+{
+  (
+    local SCRIPT=$1
+    cd /usr/local/etc/nextcloudpi-config.d/ || return 1
+    unset cleanup
+    source ./"$SCRIPT"
+    if [[ $( type -t cleanup ) == function ]]; then
+      cleanup
+      return $?
+    fi
     return 0
   )
 }

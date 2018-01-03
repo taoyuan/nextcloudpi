@@ -19,11 +19,17 @@ configure() { :; }
 
 cleanup()   
 { 
+  # cleanup all NCP extras
+  source /usr/local/etc/library.sh
+  cd /usr/local/etc/nextcloudpi-config.d/
+  for script in *.sh; do
+    cleanup_script $script
+  done
+
   # clean packages
   apt-get autoremove -y
   apt-get clean
   rm /var/lib/apt/lists/* -r
-  rm -f /home/pi/.bash_history
 
   # restore expand filesystem on first boot
   cat > /etc/init.d/resize2fs_once <<'EOF'

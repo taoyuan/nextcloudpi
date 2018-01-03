@@ -1,33 +1,66 @@
 #!/bin/bash
 
-# Perform a software update in NextCloudPi
+# Uncomplicated Firewall
 #
 # Copyleft 2017 by Ignacio Nunez Hernanz <nacho _a_t_ ownyourbits _d_o_t_ com>
 # GPL licensed (see end of file) * Use at your own risk!
 #
 # Usage:
 # 
-#   ./installer.sh remote-update.sh <IP> (<img>)
+#   ./installer.sh UFW.sh <IP> (<img>)
 #
 # See installer.sh instructions for details
 #
-# More at https://ownyourbits.com/
+# More at https://ownyourbits.com/2017/02/13/nextcloud-ready-raspberry-pi-image/
 #
 
-install() { ncp-update; }
+ACTIVE_=no
+HTTP_=80
+HTTPS_=443
+SSH_=22
+DESCRIPTION="Uncomplicated Firewall"
 
-configure() { :; }
+INFO="Beware of blocking the SSH port you are using!"
 
-cleanup()
+install()
 {
-  apt-get autoremove -y
-  apt-get clean
-  rm -rf /var/lib/apt/lists/* 
-  systemctl disable ssh
-  rm -f /etc/udev/rules.d/90-qemu.rules
-  sudo -u www-data php /var/www/nextcloud/occ config:system:delete trusted_domains 1
+  apt-get update
+  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ufw
+  systemctl disable ufw
 }
 
+configure()
+{
+  [[ "$ACTIVE_" != yes ]] && {
+    ufw --force reset
+    systemctl disable ufw
+    systemctl stop ufw
+    echo "UFW disabled"
+    return 0
+  }
+  ufw --force enable
+  systemctl enable ufw
+  systemctl start ufw
+
+  echo -e "\n# web server rules"
+  ufw allow $HTTP_/tcp
+  ufw allow $HTTPS_/tcp
+  ufw allow 4443/tcp
+
+  echo -e "\n# SSH rules"
+  ufw allow $SSH_
+
+  echo -e "\n# DNS rules"
+  ufw allow dns
+
+  echo -e "\n# SAMBA rules"
+  ufw allow samba
+
+  echo -e "\n# NFS rules"
+  ufw allow nfs
+
+  echo "UFW enabled"
+}
 
 # License
 #

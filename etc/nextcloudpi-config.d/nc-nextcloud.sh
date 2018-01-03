@@ -14,7 +14,7 @@
 # More at https://ownyourbits.com/2017/02/13/nextcloud-ready-raspberry-pi-image/
 #
 
-VER_=12.0.3
+VER_=12.0.4
 MAXFILESIZE_=2G
 MEMORYLIMIT_=768M
 MAXTRANSFERTIME_=3600
@@ -44,6 +44,7 @@ install()
   $APTINSTALL -o "Dpkg::Options::=--force-confold" php-smbclient 
   $APTINSTALL lbzip2 iputils-ping
 
+  # POSTFIX
   [[ "$ARMBIANBUILD" != 1 ]] && {
     $APTINSTALL postfix
   } || {
@@ -53,15 +54,20 @@ install()
     sed -i '/Package: postfix/{n;d}'                           /var/lib/dpkg/status
     sed -i '/Package: postfix/a;Status: install ok installed|' /var/lib/dpkg/status
   }
+  sed -i 's|^smtpd_banner .*|smtpd_banner = $myhostname ESMTP|'    /etc/postfix/main.cf
+  sed -i 's|^disable_vrfy_command .*|disable_vrfy_command = yes|'  /etc/postfix/main.cf
  
   # REDIS
   $APTINSTALL redis-server php7.0-redis
 
   local REDIS_CONF=/etc/redis/redis.conf
+  local REDISPASS=$( openssl rand -base64 32 )
   sed -i "s|# unixsocket .*|unixsocket /var/run/redis/redis.sock|" $REDIS_CONF
   sed -i "s|# unixsocketperm .*|unixsocketperm 770|"               $REDIS_CONF
+  sed -i "s|# requirepass .*|requirepass $REDISPASS|"              $REDIS_CONF
+  sed -i 's|# rename-command CONFIG ""|rename-command CONFIG ""|'  $REDIS_CONF
   sed -i "s|^port.*|port 0|"                                       $REDIS_CONF
-  echo "maxmemory ${REDIS_MEM}" >> $REDIS_CONF
+  echo "maxmemory $REDIS_MEM" >> $REDIS_CONF
   echo 'vm.overcommit_memory = 1' >> /etc/sysctl.conf
 
   usermod -a -G redis www-data
@@ -83,7 +89,7 @@ install()
 
 configure()
 {
-  ping -W 2 -w 1 -q github.com &>/dev/null || { echo "No internet connectivity"; return 1; }
+  ping -W 2 -w 1 -q google.com &>/dev/null || { echo "No internet connectivity"; return 1; }
 
   ## RE-CREATE DATABASE TABLE 
   echo "Starting mariaDB"
@@ -105,7 +111,7 @@ configure()
 
   # workaround to emulate DROP USER IF EXISTS ..;)
   local DBPASSWD=$( grep password /root/.my.cnf | cut -d= -f2 )
-  mysql -u root -p"$DBPASSWD" <<EOF
+  mysql <<EOF
 DROP DATABASE IF EXISTS nextcloud;
 CREATE DATABASE nextcloud
     CHARACTER SET utf8mb4
